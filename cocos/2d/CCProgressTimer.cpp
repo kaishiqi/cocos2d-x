@@ -441,25 +441,25 @@ void ProgressTimer::updateBar(void)
         _vertexData[3].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
     } else {
         if(!_vertexData) {
-            _vertexDataCount = 8;
+            _vertexDataCount = 16;
             _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
             CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
-            //    TOPLEFT 1
-            _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
-            _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(0,1));
-
-            //    BOTLEFT 1
-            _vertexData[1].texCoords = textureCoordFromAlphaPoint(Vec2(0,0));
-            _vertexData[1].vertices = vertexFromAlphaPoint(Vec2(0,0));
-
-            //    TOPRIGHT 2
-            _vertexData[6].texCoords = textureCoordFromAlphaPoint(Vec2(1,1));
-            _vertexData[6].vertices = vertexFromAlphaPoint(Vec2(1,1));
-
-            //    BOTRIGHT 2
-            _vertexData[7].texCoords = textureCoordFromAlphaPoint(Vec2(1,0));
-            _vertexData[7].vertices = vertexFromAlphaPoint(Vec2(1,0));
         }
+        //    TOPLEFT 1
+        _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
+        _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(0,1));
+
+        //    BOTLEFT 1
+        _vertexData[1].texCoords = textureCoordFromAlphaPoint(Vec2(0,0));
+        _vertexData[1].vertices = vertexFromAlphaPoint(Vec2(0,0));
+
+        //    TOPRIGHT 2
+        _vertexData[6].texCoords = textureCoordFromAlphaPoint(Vec2(1,1));
+        _vertexData[6].vertices = vertexFromAlphaPoint(Vec2(1,1));
+
+        //    BOTRIGHT 2
+        _vertexData[7].texCoords = textureCoordFromAlphaPoint(Vec2(1,0));
+        _vertexData[7].vertices = vertexFromAlphaPoint(Vec2(1,0));
 
         //    TOPRIGHT 1
         _vertexData[2].texCoords = textureCoordFromAlphaPoint(Vec2(min.x,max.y));
@@ -476,6 +476,38 @@ void ProgressTimer::updateBar(void)
         //    BOTLEFT 2
         _vertexData[5].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
         _vertexData[5].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
+        
+        //    TOPLEFT 1
+        _vertexData[8].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
+        _vertexData[8].vertices = vertexFromAlphaPoint(Vec2(0,1));
+        
+        //    BOTLEFT 1
+        _vertexData[13].texCoords = textureCoordFromAlphaPoint(Vec2(0,0));
+        _vertexData[13].vertices = vertexFromAlphaPoint(Vec2(0,0));
+        
+        //    TOPRIGHT 2
+        _vertexData[10].texCoords = textureCoordFromAlphaPoint(Vec2(1,1));
+        _vertexData[10].vertices = vertexFromAlphaPoint(Vec2(1,1));
+        
+        //    BOTRIGHT 2
+        _vertexData[15].texCoords = textureCoordFromAlphaPoint(Vec2(1,0));
+        _vertexData[15].vertices = vertexFromAlphaPoint(Vec2(1,0));
+        
+        //    TOPRIGHT 1
+        _vertexData[9].texCoords = textureCoordFromAlphaPoint(Vec2(min.x,max.y));
+        _vertexData[9].vertices = vertexFromAlphaPoint(Vec2(min.x,max.y));
+        
+        //    BOTRIGHT 1
+        _vertexData[12].texCoords = textureCoordFromAlphaPoint(Vec2(min.x,min.y));
+        _vertexData[12].vertices = vertexFromAlphaPoint(Vec2(min.x,min.y));
+        
+        //    TOPLEFT 2
+        _vertexData[11].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,max.y));
+        _vertexData[11].vertices = vertexFromAlphaPoint(Vec2(max.x,max.y));
+        
+        //    BOTLEFT 2
+        _vertexData[14].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
+        _vertexData[14].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
     }
     updateColor();
 }
@@ -522,10 +554,12 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t flags)
         }
         else 
         {
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
-            glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
-            // 2 draw calls
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,_vertexDataCount);
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/4);
+            glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/4);
+            glDrawArrays(GL_TRIANGLE_STRIP, 8, _vertexDataCount/4);
+            glDrawArrays(GL_TRIANGLE_STRIP, 12, _vertexDataCount/4);
+            // 4 draw calls
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(4,_vertexDataCount);
         }
     }
 }
